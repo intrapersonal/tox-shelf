@@ -415,7 +415,7 @@ def cmd_td(a):
     if not a.no_copy:
         try:
             if os.name == "nt":
-                subprocess.run(["clip"], input=line.encode("utf-16-le"), check=True, creationflags=0x08000000)
+                subprocess.run(["clip"], input=line.encode("utf-16"), check=True, creationflags=0x08000000)
                 copied = True
             elif shutil.which("pbcopy"):
                 subprocess.run(["pbcopy"], input=line.encode(), check=True)
