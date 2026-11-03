@@ -45,6 +45,9 @@ def test_prerelease_needs_opt_in():
 def test_ordering():
     assert v("1.0.0-alpha") < v("1.0.0-alpha.1") < v("1.0.0-beta") < v("1.0.0")
     assert v("v1.2") == v("1.2.0")
+    assert v("v.1.0.0") == v("1.0.0")
+    assert v("ver.1.3") == v("1.3.0")
+    assert v("release-2.0.1") == v("2.0.1")
     assert str(v("1.2.3-rc.1+abc")) == "1.2.3-rc.1+abc"
 
 

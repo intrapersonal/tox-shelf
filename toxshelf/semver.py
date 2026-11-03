@@ -2,7 +2,7 @@ import re
 from functools import total_ordering
 
 _VERSION = re.compile(
-    r"^v?(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:-([0-9A-Za-z.-]+))?(?:\+([0-9A-Za-z.-]+))?$"
+    r"^(?:v|ver|version|release|rel)?[._-]?(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:-([0-9A-Za-z.-]+))?(?:\+([0-9A-Za-z.-]+))?$"
 )
 
 
