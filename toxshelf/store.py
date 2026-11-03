@@ -54,7 +54,7 @@ def install(raw_specs, log=None, link=True, td_build=None):
                 entry["dependents"] = sorted(deps)
             entry["palette"] = palette.link(f.name, pkg_dir(f.name), f.tox, cfg) if link else []
             data["packages"][f.name] = entry
-            done.append({"name": f.name, "version": f.version, "from": f.source, "ref": f.ref, "previous": prev.get("version"), "palette": entry["palette"], "path": str(pkg_dir(f.name)), "dependency_of": w["parent"]})
+            done.append({"name": f.name, "version": f.version, "from": f.source, "ref": f.ref, "sha": f.sha, "previous": prev.get("version"), "previous_sha": prev.get("sha"), "palette": entry["palette"], "path": str(pkg_dir(f.name)), "dependency_of": w["parent"]})
         save(data)
         return done, plan.warnings
     finally:

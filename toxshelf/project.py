@@ -93,7 +93,7 @@ def _apply(root, plan, lock, roots):
         if by:
             entry["by"] = sorted(by)
         lock["packages"][f.name] = entry
-        out.append({"name": f.name, "version": f.version, "from": f.source, "ref": f.ref, "path": str(mods / f.name), "dependency_of": w["parent"]})
+        out.append({"name": f.name, "version": f.version, "from": f.source, "ref": f.ref, "sha": f.sha, "path": str(mods / f.name), "dependency_of": w["parent"]})
     return out
 
 
@@ -241,6 +241,7 @@ def listing(root):
                 "version": e.get("version"),
                 "from": e.get("source"),
                 "ref": e.get("ref"),
+                "sha": e.get("sha"),
                 "dependency_of": ", ".join(e.get("by") or []) or None,
                 "installed": bool(meta),
                 "tox": [str(mods / name / t) for t in meta.get("tox", [])],
