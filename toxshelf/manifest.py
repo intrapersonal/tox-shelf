@@ -30,7 +30,7 @@ def pick_tox(found):
     def parts(p):
         return [s.lower() for s in p.split("/")[:-1]]
 
-    released = [p for p in found if parts(p) and parts(p)[0] in RELEASE_DIRS]
+    released = [p for p in found if any(s in RELEASE_DIRS for s in parts(p))]
     if released:
         return released
     clean = [p for p in found if not any(s in NOISE_DIRS for s in parts(p))]
