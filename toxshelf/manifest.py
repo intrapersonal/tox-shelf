@@ -22,6 +22,21 @@ def find_tox(root):
     return out
 
 
+RELEASE_DIRS = {"release", "releases", "dist", "tox", "toxes", "components"}
+NOISE_DIRS = {"dev", "test", "tests", "example", "examples", "sample", "samples", "sample_project", "demo", "demos", "old", "archive", "wip"}
+
+
+def pick_tox(found):
+    def parts(p):
+        return [s.lower() for s in p.split("/")[:-1]]
+
+    released = [p for p in found if parts(p) and parts(p)[0] in RELEASE_DIRS]
+    if released:
+        return released
+    clean = [p for p in found if not any(s in NOISE_DIRS for s in parts(p))]
+    return clean or found
+
+
 def glob(root, pattern):
     root = Path(root)
     hits = []
@@ -163,7 +178,7 @@ def load(root, required=True):
 
 
 def synthesize(root, name, version=None):
-    tox = find_tox(root)
+    tox = pick_tox(find_tox(root))
     if not tox:
         return None
     data = {"name": clean_name(name), "version": str(version or "0.0.0"), "tox": tox}
