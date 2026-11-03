@@ -63,7 +63,7 @@ DEFAULTS = {
     "palette": "",
     "palette_link": True,
     "token": "",
-    "index_url": "https://raw.githubusercontent.com/intrapersonal/tox-shelf/main/index.json",
+    "index_url": "https://raw.githubusercontent.com/intrapersonal/tox-shelf/main/toxshelf/index.json",
     "td_build": "",
 }
 
