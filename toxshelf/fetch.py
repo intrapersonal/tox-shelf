@@ -26,6 +26,7 @@ class Fetched:
         self.manifest = kw.get("manifest")
         self.files = kw.get("files") or []
         self.integrity = kw.get("integrity") or ""
+        self.synth = kw.get("synth", False)
 
     @property
     def dependencies(self):
@@ -188,7 +189,8 @@ def _finish(kind, root, default_name, version, source, ref=None, sha=None, url=N
     if subdir and not base.is_dir():
         raise ShelfError(f"{subdir} doesn't exist in {source}")
     m = manifest.load(base, required=False)
-    if m is not None and m.is_package:
+    synth = not (m is not None and m.is_package)
+    if not synth:
         bad = m.problems(strict=False)
         if bad:
             raise ShelfError(f"{source} has a broken shelf.json: " + "; ".join(bad))
@@ -221,6 +223,7 @@ def _finish(kind, root, default_name, version, source, ref=None, sha=None, url=N
         manifest=m,
         files=files,
         integrity=integrity(base, files),
+        synth=synth,
     )
 
 
@@ -236,7 +239,11 @@ def fetch(spec, workdir, lookup=None):
 
         real = parse(target)
         real.range, real.ref = spec.range, spec.ref or real.ref
-        return fetch(real, workdir, lookup)
+        f = fetch(real, workdir, lookup)
+        if f.synth:
+            f.name = spec.alias
+            f.manifest.data["name"] = spec.alias
+        return f
 
     if spec.kind == "github":
         refs = github.ls_remote(spec.owner, spec.repo)
