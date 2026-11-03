@@ -15,6 +15,7 @@ class ShelfExt:
         self.q = queue.Queue()
         self.busy = False
         self.waiting = False
+        self.pending = []
         run("args[0].Hello()", self, delayFrames=30, delayRef=op.TDResources)
 
     @property
@@ -45,9 +46,9 @@ class ShelfExt:
 
     def Run(self, args, done=None, label=None, quiet=False):
         if self.busy:
-            if not quiet:
-                self.Status("still working on the last thing, hang on")
-            return False
+            if not any(p[0] == args for p in self.pending):
+                self.pending.append((args, done, label, quiet))
+            return True
         self.busy = True
         if label:
             self.Status(label)
@@ -90,15 +91,18 @@ class ShelfExt:
             return
         self.waiting = False
         self.busy = False
-        if not data.get("ok"):
-            if not quiet:
-                msg = "error: " + str(data.get("error"))
-                if data.get("hint"):
-                    msg += " (" + str(data["hint"]) + ")"
-                self.Status(msg)
-            return
-        if done:
-            done(data)
+        try:
+            if not data.get("ok"):
+                if not quiet:
+                    msg = "error: " + str(data.get("error"))
+                    if data.get("hint"):
+                        msg += " (" + str(data["hint"]) + ")"
+                    self.Status(msg)
+            elif done:
+                done(data)
+        finally:
+            if self.pending and not self.busy:
+                self.Run(*self.pending.pop(0))
 
     def Hello(self):
         build = f"{app.version}.{app.build}"
@@ -110,8 +114,7 @@ class ShelfExt:
             else:
                 self.Refresh()
 
-        if not self.Run(["config", "set", "td_build", build], palette):
-            self.Refresh()
+        self.Run(["config", "set", "td_build", build], palette)
 
     def OnPar(self, par):
         n = par.name
