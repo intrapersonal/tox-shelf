@@ -208,7 +208,7 @@ def sync(root, update=False, frozen=False, log=None):
                 log(f"fetching {name}")
             f = fetch_locked(entry, work)
             installer.place(f, mods / name)
-            done.append({"name": name, "version": f.version, "from": f.source, "path": str(mods / name)})
+            done.append({"name": name, "version": f.version, "from": f.source, "ref": f.ref, "sha": f.sha, "path": str(mods / name)})
         if missing:
             specs = []
             for k in missing:
