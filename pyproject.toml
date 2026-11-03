@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tox-shelf"
+dynamic = ["version"]
+description = "package manager for touchdesigner components"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "mason arcieri" }]
+requires-python = ">=3.9"
+dependencies = []
+keywords = ["touchdesigner", "tox", "package-manager"]
+
+[project.urls]
+Homepage = "https://github.com/intrapersonal/tox-shelf"
+
+[project.scripts]
+shelf = "toxshelf.cli:main"
+
+[tool.setuptools]
+packages = ["toxshelf", "toxshelf.tdside"]
+
+[tool.setuptools.package-data]
+"toxshelf.tdside" = ["*.py"]
+"toxshelf" = ["index.json"]
+
+[tool.setuptools.dynamic]
+version = { attr = "toxshelf.__version__" }
