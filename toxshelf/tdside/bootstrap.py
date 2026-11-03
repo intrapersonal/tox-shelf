@@ -45,13 +45,6 @@ def _shelf_build():
     ext = c.create(textDAT, "ShelfExt")
     ext.text = EXT
     ext.nodeX, ext.nodeY = 0, 0
-    pe = c.create(parameterexecuteDAT, "parexec")
-    pe.text = PAREXEC
-    pe.nodeX, pe.nodeY = 0, -150
-    pe.par.op = ".."
-    for name, val in (("custom", True), ("builtin", False), ("valuechange", True), ("onpulse", True)):
-        if hasattr(pe.par, name):
-            setattr(pe.par, name, val)
     for i, (name, head) in enumerate((("packages", ["name", "version", "from", "tox"]), ("results", ["name", "repo", "description", "stars", "indexed"]))):
         t = c.create(tableDAT, name)
         t.clear()
@@ -89,6 +82,14 @@ def _shelf_build():
         c.par.extension1 = expr
         c.par.promoteextension1 = True
     c.initializeExtensions()
+
+    pe = c.create(parameterexecuteDAT, "parexec")
+    pe.text = PAREXEC
+    pe.nodeX, pe.nodeY = 0, -150
+    pe.par.op = ".."
+    for name, val in (("custom", True), ("builtin", False), ("valuechange", True), ("onpulse", True)):
+        if hasattr(pe.par, name):
+            setattr(pe.par, name, val)
 
     saved = []
     folder = getattr(app, "userPaletteFolder", "") or os.path.join(os.path.expanduser("~"), "Documents", "Derivative", "Palette")

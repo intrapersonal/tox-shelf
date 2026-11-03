@@ -1,9 +1,15 @@
+def _shelf(par):
+    ext = getattr(parent().ext, "ShelfExt", None)
+    if ext is not None:
+        ext.OnPar(par)
+
+
 def onValueChange(par, prev):
-    parent().ext.ShelfExt.OnPar(par)
+    _shelf(par)
 
 
 def onPulse(par):
-    parent().ext.ShelfExt.OnPar(par)
+    _shelf(par)
 
 
 def onExpressionChange(par, val, prev):
