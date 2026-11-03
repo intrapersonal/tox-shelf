@@ -28,8 +28,8 @@ class Plan:
         self.wanted[f.name] = {"requested": requested, "parent": parent}
 
 
-def dep_spec(key, value):
-    spec = parse(key)
+def dep_spec(key, value, cwd=None):
+    spec = parse(key, cwd=cwd)
     value = (value or "*").strip()
     if value.startswith("#"):
         spec.ref = value[1:]
@@ -77,7 +77,7 @@ def resolve(specs, log=None, td_build="", work=None):
         if f.touchdesigner and td_build and not td_ok(f.touchdesigner, td_build):
             plan.warnings.append(f"{f.name} wants touchdesigner {f.touchdesigner}, you have {td_build}")
         for key, value in f.dependencies.items():
-            queue.append((dep_spec(key, value), f.name))
+            queue.append((dep_spec(key, value, cwd=str(f.root) if f.kind == "local" else None), f.name))
     return plan
 
 
