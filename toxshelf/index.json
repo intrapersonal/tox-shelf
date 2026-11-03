@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "packages": {
+    "wintd": {
+      "source": "intrapersonal/wintd",
+      "description": "hands, face, pose, body masks and depth for td on windows, runs in its own process",
+      "tags": ["tracking", "mediapipe", "hands", "depth", "windows"]
+    },
+    "save-external": {
+      "source": "raganmd/touchdesigner-save-external",
+      "description": "helper for saving external tox and text files",
+      "tags": ["workflow", "externals", "git"]
+    },
+    "hue-control": {
+      "source": "raganmd/touchdesigner-hueControl",
+      "description": "control philips hue lights from td",
+      "tags": ["lighting", "hue", "hardware"]
+    },
+    "sop-to-svg": {
+      "source": "raganmd/touchdesigner-sop-to-svg",
+      "description": "turn sops into svg for plotting and cutting",
+      "tags": ["svg", "plotter", "laser", "export"]
+    },
+    "tdx": {
+      "source": "dylanroscover/TDXComponents",
+      "description": "everyday components: chop recorder, color curves, comper, masker, playback, timecode and more",
+      "tags": ["utility", "color", "compositing", "timecode"]
+    },
+    "search-palette": {
+      "source": "yeataro/TD-SearchPalette",
+      "description": "ui add-on for searching the palette",
+      "tags": ["ui", "palette", "search"]
+    },
+    "kinect-streamer": {
+      "source": "yeataro/TD_kinect_streamer",
+      "description": "use multiple kinect v2s over the network",
+      "tags": ["kinect", "depth", "network", "hardware"]
+    },
+    "palette-tools": {
+      "source": "Richard-Burns/Palette-Tools",
+      "description": "glitch, vhs, camera rigs and other palette tools",
+      "tags": ["effects", "glitch", "camera"]
+    },
+    "morphe": {
+      "source": "morphegit/morphes_palette",
+      "description": "morphe's palette of techniques and tools",
+      "tags": ["techniques", "optimization", "top", "chop"]
+    },
+    "webwelder": {
+      "source": "djipco/webwelder",
+      "description": "two way websocket communication between td and a web page",
+      "tags": ["web", "websocket", "network"]
+    },
+    "tdfam": {
+      "source": "dotsimulate/TDFam",
+      "description": "custom operator families with tab menu integration",
+      "tags": ["workflow", "operators", "tab menu"]
+    }
+  }
+}
